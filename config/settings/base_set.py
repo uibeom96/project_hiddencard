@@ -1,25 +1,6 @@
 from pathlib import Path
-from json import loads
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# .json 파일로 secret키 따로 관리.
-with open("secret.json", "r", encoding="UTF_8") as f:
-    key_list = loads(f.read()) 
-
-def get_key(key, key_list=key_list):
-    try:
-        return key_list[key]
-    except KeyError:
-        raise ImproperlyConfigured(f"{key}의 오류입니다.")
-
-
-SECRET_KEY = get_key("KEY_DJANGO")
-
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 INSTALLED_APPS = [
@@ -60,16 +41,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
