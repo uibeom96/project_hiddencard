@@ -15,9 +15,9 @@ def get_key(key, key_list=key_list):
 
 SECRET_KEY = get_key("KEY_DJANGO")
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 DATABASES = {
     'default': {
