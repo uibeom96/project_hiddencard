@@ -9,3 +9,4 @@ media
 venv/
 deploy_key.json
 develop_key.json
+secret.json
