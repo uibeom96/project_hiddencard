@@ -11,8 +11,12 @@
                 <h3 class="video_title text-center">[ {{ video.title}} ]</h3>
                 <hr>
                 <div class="button_info">
-                    <button class="like_button"><i class="fas fa-heart"></i> <span>{{ video.like|length }}</span></button>
-                    <button class="dis_like_button"><i class="fas fa-heart-broken"></i> <span>{{ video.dis_like|length }}</span></button>
+                    <button id="{{video.id}}" class="like_button" onclick="click_like(this.id)"><i class="fas fa-heart"></i>
+                        <span id="like_count">{{ video.like.all|length }}</span></button>
+                    <button id="{{video.id}}" class="dis_like_button" onclick="click_dis_like(this.id)"><i class="fas fa-heart-broken"></i>
+                        <span id="dis_like_count">{{ video.dis_like.all|length }}</span></button>
+                        {{ test }}
+                    <span id="message" style="margin-left:30px;"></span>
                     <button class="follower">팔로워 맺기</button>
                 </div>
 
@@ -50,4 +54,38 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    function click_like(video_id) {
+        $.ajax({
+            url: "{% url 'main:ajax_like' %}",
+            data: {
+                'video_id': video_id
+            },
+            dataType: "json",
+            success: function (response) {
+                $('#like_count').html(response.like_count)
+                $("#message").html(response.message)
+            }
+        })
+    }
+</script>
+
+<script>
+    function click_dis_like(video_id) {
+        $.ajax({
+            url: "{% url 'main:ajax_dis_like' %}",
+            data: {
+                'video_id': video_id
+            },
+            dataType: "json",
+            success: function (response) {
+                $('#dis_like_count').html(response.dis_like_count)
+                $("#message").html(response.message)
+            }
+        })
+    }
+</script>
 {% endblock %}

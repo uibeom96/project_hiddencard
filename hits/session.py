@@ -16,7 +16,7 @@ class Hit_Count_Session(object):
         if str(video.id) not in self.hits:
             video.hit_count += 1
             video.save()            
-        self.hits[video.id] = {str(video.author): str(video.title) }
+        self.hits[video.id] = {str(video.author.nick_name): str(video.title) }
         self.saves()
 
 
@@ -25,6 +25,4 @@ class Hit_Count_Session(object):
         self.session.modified = True
 
 
-    def clear(self):
-        self.session 
             
