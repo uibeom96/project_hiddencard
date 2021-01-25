@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<hr>
+<div class="row">
+    <div class="col-md-4">
+        
+        <div class="card" style="margin-left: 10px; background-color: beige;">
+            <h6 class="alert alert-success video_ui">등록 : {{ video.author }}<span>작성일 : {{ video.created|date:"Y-m-d H:i:s"}}</span></h6>
+            <video src="{{ video.video.url }}" width="100%" controls autoplay></video>
+                <h7 class="video_font">{{ video.hash_tag }} <span class="font_hit_count">조회수 : {{ video.hit_count }}</span></h7>
+                <h3 class="video_title text-center">[ {{ video.title}} ]</h3>
+                <hr>
+                <div class="button_info">
+                    <button class="like_button"><i class="fas fa-heart"></i> <span>{{ video.like|length }}</span></button>
+                    <button class="dis_like_button"><i class="fas fa-heart-broken"></i> <span>{{ video.dis_like|length }}</span></button>
+                    <button class="follower">팔로워 맺기</button>
+                </div>
+
+                <div class="next_playing">
+                    <a href="{% url 'main:index' %}" class="next_button">다음 영상보기 <i class="fas fa-forward"></i></a>
+                </div>
+        </div>
+        
+    </div>
+    <div class="col-md-4">
+        <p class="alert alert-success text-center">간단한 한줄 리뷰</p>
+        {% for comment in comments %}
+        <div class="form-group mt-1">
+            <small class="badge badge-info">{{ comment.content }}</small>
+                {% if comment.author == request.user %}
+                <a href="#"><i class="fas fa-edit"></i></a> <a href="#"><i class="fas fa-trash"></i></a>
+                {% endif %}
+                <br>
+            <small><strong>작성자 : {{ comment.author }}</strong></small>
+            <small>({{comment.created|timesince}}), 전 작성됨</small>
+        </div>
+        {% endfor %}
+
+        <div class="form-group">    
+            <form action="" method="POST">
+                {% csrf_token %}
+                <label>댓글 남기기</label>
+                {% if not user.is_authenticated %}
+                    <textarea name="content" class="form-control" rows="2">{% if not user.is_authenticated %}댓글을 이용하시려면 로그인을 해주세요 {% endif %}</textarea>
+                {% else %}
+                    <textarea name="content" class="form-control" rows="2"></textarea>
+                    <input class="btn btn-primary mt-2" type="submit" value="제출">
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

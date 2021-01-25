@@ -1,0 +1,25 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/videos.css' %}">
+    <script src="https://kit.fontawesome.com/92fc3ba4a9.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    {% include "navbar.html" %}
+    {% block content %}
+    
+    {% endblock %}
+
+    {% block script %}
+    {% endblock %}
+        <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
+
