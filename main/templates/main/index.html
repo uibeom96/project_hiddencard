@@ -5,7 +5,7 @@
     <div class="col-md-4">
         
         <div class="card" style="margin-left: 10px; background-color: beige;">
-            <h6 class="alert alert-success video_ui">등록 : {{ video.author }}<span>작성일 : {{ video.created|date:"Y-m-d H:i:s"}}</span></h6>
+            <h6 class="alert alert-success video_ui" style="font-size: 14px;">등록 : {{ video.author.nick_name }}<span active>작성일 : {{ video.created|date:"Y-m-d H:i:s"}}</span></h6>
             <video src="{{ video.video.url }}" width="100%" controls autoplay></video>
                 <h7 class="video_font">{{ video.hash_tag }} <span class="font_hit_count">조회수 : {{ video.hit_count }}</span></h7>
                 <h3 class="video_title text-center">[ {{ video.title}} ]</h3>
@@ -23,7 +23,7 @@
         
     </div>
     <div class="col-md-4">
-        <p class="alert alert-success text-center">간단한 한줄 리뷰</p>
+        <p class="alert alert-success text-center" style="font-size: 14px;">간단한 한줄 리뷰</p>
         {% for comment in comments %}
         <div class="form-group mt-1">
             <small class="badge badge-info">{{ comment.content }}</small>

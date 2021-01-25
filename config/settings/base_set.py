@@ -12,7 +12,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # --------- my app -----------
     'user.apps.UserConfig',
-    'main',
+    'main.apps.MainConfig',
+    'hits.apps.HitsConfig',
 
     
 ]
@@ -77,9 +78,13 @@ USE_L10N = True
 USE_TZ = True
 
 
+HIT_ID = "hit_count"
+
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [ BASE_DIR / 'static' ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
