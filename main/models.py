@@ -37,18 +37,7 @@ class Comment(BaseModel):
         def __str__(self):
             return self.content
 
-class Follow(BaseModel):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    follower = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="followers")
-    
-    class Meta:
-        db_table = "follow"
-        ordering = ("-created", )
-        verbose_name = "팔로우들"
-        verbose_name_plural = "팔로우"
 
-    def __str__(self):
-        return self.author+"의 팔로우"
 
 
 

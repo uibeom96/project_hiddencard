@@ -15,9 +15,12 @@
                         <span id="like_count">{{ video.like.all|length }}</span></button>
                     <button id="{{video.id}}" class="dis_like_button" onclick="click_dis_like(this.id)"><i class="fas fa-heart-broken"></i>
                         <span id="dis_like_count">{{ video.dis_like.all|length }}</span></button>
-                        {{ test }}
                     <span id="message" style="margin-left:30px;"></span>
-                    <button class="follower">팔로워 맺기</button>
+
+                    <button id="{{ video.author.id }}" class="follower" onclick="click_follower(this.id)">팔로워 맺기
+                        <i class="fas fa-user-alt"></i><p id="follow_count">{{ video.author.follower.all|length }}</p>
+                    </button>
+
                 </div>
 
                 <div class="next_playing">
@@ -83,6 +86,22 @@
             dataType: "json",
             success: function (response) {
                 $('#dis_like_count').html(response.dis_like_count)
+                $("#message").html(response.message)
+            }
+        })
+    }
+</script>
+
+<script>
+    function click_follower(author_id) {
+        $.ajax({
+            url: "{% url 'main:ajax_follower' %}",
+            data: {
+                "author_id": author_id,
+            },
+            dataType: "json",
+            success: function (response) {
+                $('#follow_count').html(response.follow_count)
                 $("#message").html(response.message)
             }
         })

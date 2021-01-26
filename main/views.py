@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from main.models import Video
+from user.models import User
 from main.models import Comment
 from hits.session import Hit_Count_Session
 from django.contrib.auth.decorators import login_required
@@ -59,6 +60,31 @@ def ajax_dis_like(request):
             message = "싫어요를 눌렀습니다! "
             video.dis_like.add(request.user)
 
-        context = {'dis_like_count' : video.dis_like.count(), "message": message, "test": "2"}
+        context = {'dis_like_count' : video.dis_like.count(), "message": message}
         return HttpResponse(json.dumps(context), content_type="application/json") 
         
+def ajax_follower(request):
+    if request.is_ajax():
+        author_id = request.GET.get("author_id")
+        author = User.objects.get(id=author_id)
+        print(author.follower.all())
+        if not request.user.is_authenticated:
+            message = "로그인을 해주세요"
+            context = {"follow_count": author.follower.all().count(), "message": message}
+            return HttpResponse(json.dumps(context), content_type="application/json")
+
+        if author == request.user:
+            message = ""
+            context = {"follow_count": author.follower.all().count(), "message": message}
+            return HttpResponse(json.dumps(context), content_type="application/json")
+
+        if request.user in author.follower.all():
+            message = "팔로우를 취소 했어요!"
+            author.follower.remove(request.user)
+            print(author.follower.all())
+        else:
+            message = "팔로우를 했어요!"
+            author.follower.add(request.user)
+            print(author.follower.all())
+        context = {"follow_count":   author.follower.all().count(), "message": message}
+        return HttpResponse(json.dumps(context), content_type="application/json") 

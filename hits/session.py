@@ -10,7 +10,6 @@ class Hit_Count_Session(object):
             hits = self.session[settings.HIT_ID] = {}
 
         self.hits = hits
-        print(self.hits)
 
     def add(self, video):
         if str(video.id) not in self.hits:
