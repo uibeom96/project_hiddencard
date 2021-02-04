@@ -1,7 +1,7 @@
 # project_hiddencard
 [ 백엔드 꿈을 이루자 ] Part .4 네번째 개인 프로젝트 " 잼톡 "
 
-미완성.
+현재 미완성.
 
 웹 소개 
 
@@ -22,7 +22,7 @@ HTML / CSS / JS 는 백엔드 개발 포커스에 맞게 최대한 간단하게 
 - 좋아요 / 싫어요 기능
 - 다음 영상 넘기기
 
-<img src="https://user-images.githubusercontent.com/76981768/106838555-e1fb1200-66df-11eb-907e-6d6b83726d25.png" width="500" height="300">
+<img src="https://user-images.githubusercontent.com/76981768/106846683-ae74b380-66f0-11eb-9166-07635c80045d.png" width="500" height="300">
 
 해당 프로젝트는 python / Django 로 개발하였습니다.  
 DB는 postgresql을 사용하였습니다.  
