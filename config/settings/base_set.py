@@ -10,10 +10,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
     # --------- my app -----------
     'user.apps.UserConfig',
     'main.apps.MainConfig',
     'hits.apps.HitsConfig',
+    'accounts.apps.AccountsConfig',
 
     
 ]
@@ -65,7 +67,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "user.User"
-
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 LANGUAGE_CODE = 'ko'
 

@@ -34,8 +34,8 @@ class Comment(BaseModel):
         verbose_name = "댓글들"
         verbose_name_plural = "댓글"
 
-        def __str__(self):
-            return self.content
+    def __str__(self):
+        return self.content
 
 
 

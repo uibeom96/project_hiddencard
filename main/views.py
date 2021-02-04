@@ -1,17 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from main.models import Video
 from user.models import User
 from main.models import Comment
 from hits.session import Hit_Count_Session
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.core.paginator import Paginator
 import random, json
 
 @login_required
 def index(request):
+    page = request.GET.get("page", 1)
+
     video_list = Video.objects.filter(is_deleted=False)
     video = random.choice(video_list)
     comments = Comment.objects.filter(video = video)
+
+    page_count = Paginator(comments, 5)
+    page_object = page_count.get_page(page)
 
     a = Hit_Count_Session(request)
     a.add(video)
@@ -19,7 +25,7 @@ def index(request):
     return render(request, "main/index.html",   
     {
         "video": video,
-        "comments": comments,
+        "comments": page_object,
     })
 
 
@@ -67,7 +73,7 @@ def ajax_follower(request):
     if request.is_ajax():
         author_id = request.GET.get("author_id")
         author = User.objects.get(id=author_id)
-        print(author.follower.all())
+
         if not request.user.is_authenticated:
             message = "로그인을 해주세요"
             context = {"follow_count": author.follower.all().count(), "message": message}
@@ -87,4 +93,26 @@ def ajax_follower(request):
             author.follower.add(request.user)
             print(author.follower.all())
         context = {"follow_count":   author.follower.all().count(), "message": message}
+        return HttpResponse(json.dumps(context), content_type="application/json") 
+
+
+def ajax_comment(request, pk):
+    if request.is_ajax():
+        video = get_object_or_404(Video, id=pk)
+
+        if len(request.POST.get("content")) == 0:
+            message = "최소 1글자 이상 작성해주세요"
+            context = {"message": message}
+            return HttpResponse(json.dumps(context), content_type="application/json") 
+
+        Comment.objects.create(
+            author=request.user,
+            video=video,
+            content=request.POST.get("content"))
+
+        context = {
+            "comment": request.POST.get("content"),
+            "author": str(request.user),
+            }
+
         return HttpResponse(json.dumps(context), content_type="application/json") 
